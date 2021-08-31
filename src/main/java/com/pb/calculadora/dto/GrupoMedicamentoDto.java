@@ -2,16 +2,19 @@ package com.pb.calculadora.dto;
 
 public class GrupoMedicamentoDto {
 
-    private Long id;
+    private Long identificadr;
 
     private String nome;
 
-    public Long getId() {
-        return id;
+    private String descritivo;
+
+
+    public Long getIdentificadr() {
+        return identificadr;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdentificadr(Long identificadr) {
+        this.identificadr = identificadr;
     }
 
     public String getNome() {
@@ -20,6 +23,14 @@ public class GrupoMedicamentoDto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescritivo() {
+        return descritivo;
+    }
+
+    public void setDescritivo(String descritivo) {
+        this.descritivo = descritivo;
     }
 
     
