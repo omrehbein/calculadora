@@ -44,7 +44,8 @@ INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (28, 'Vancomi
 
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(1,'IM - Intramuscular');
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(2,'IV - Intravenoso');
-
+INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(3,'IV direto - Intravenoso direto');
+INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(4,'IV infusao - Intravenoso infusao');
 
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (1, 'Zovirax', 1, 1, 250, null, 'FR/AMP','mg');
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (2, 'Ezopen', 1, 2, 250, null, 'FR/AMP','mg');
