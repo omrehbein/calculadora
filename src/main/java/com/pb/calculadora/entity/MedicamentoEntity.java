@@ -46,6 +46,16 @@ public class MedicamentoEntity {
     @Column(name = "concentracao_inicial", nullable = true)
     private BigDecimal concentracaoInicial;
 
+    @Column(name = "embalagem_apresentada")
+    @Enumerated(EnumType.STRING)
+    private EnumEmbalagemApresentada embalagemApresentada;
+
+    @Column(name = "unidade_medida")
+    @Enumerated(EnumType.STRING)
+    private EnumUnidadeMedida unidadeMedida;
+    
+
+
     @Column(name = "info_sobra", nullable = true)
     private String infoSobra;
 
@@ -54,12 +64,4 @@ public class MedicamentoEntity {
 
     @Column(name = "info_tempo_administracao", nullable = true)
     private String infoTempoAdministracao;
-
-    @Column(name = "embalagem_apresentada")
-    @Enumerated(EnumType.STRING)
-    private EnumEmbalagemApresentada embalagemApresentada;
-
-    @Column(name = "unidade_medida")
-    @Enumerated(EnumType.STRING)
-    private EnumUnidadeMedida unidadeMedida;
 }

@@ -1,8 +1,9 @@
 package com.pb.calculadora.entity.enums;
 
 public enum EnumEmbalagemApresentada {
+    FRASCOAMPOLA("FR/AMP", "Frasco/Ampola"),
     FRASCO("FR", "Frasco"),
-    AMPOLA("AM", "Ampola");
+    AMPOLA("AMP", "Ampola");
 
     private final String sigla;
     private final String nome;

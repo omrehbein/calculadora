@@ -42,8 +42,12 @@ INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (26, 'Sulfame
 INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (27, 'Teicoplanina');
 INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (28, 'Vancomicina');
 
-INSERT INTO `calculadora`.`medicamento` (id, nome, grupo_medicamento_id, laboratorio_id) VALUES (1, 'Zovirax', 1, 1);
-INSERT INTO `calculadora`.`medicamento` (id, nome, grupo_medicamento_id, laboratorio_id) VALUES (2, 'Ezopen', 1, 2);
-INSERT INTO `calculadora`.`medicamento` (id, nome, grupo_medicamento_id, laboratorio_id) VALUES (3, 'Aciclovir', 1, 2);
-INSERT INTO `calculadora`.`medicamento` (id, nome, grupo_medicamento_id, laboratorio_id) VALUES (4, 'Univir', 1, 3);
-INSERT INTO `calculadora`.`medicamento` (id, nome, grupo_medicamento_id, laboratorio_id) VALUES (5, 'Zynvir', 1, 4);
+INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(1,'IM - Intramuscular');
+INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(2,'IV - Intravenoso');
+
+
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (1, 'Zovirax', 1, 1, 250, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (2, 'Ezopen', 1, 2, 250, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (3, 'Aciclovir', 2, 1, 250, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (4, 'Univir', 1, 3, 250, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (5, 'Zynvir', 1, 4, 250, null, 'FR/AMP','mg');
