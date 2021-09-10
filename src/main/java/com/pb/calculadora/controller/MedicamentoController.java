@@ -47,7 +47,7 @@ public class MedicamentoController {
 	}
 
     @PostMapping(path="{id}/calcular")
-	public @ResponseBody CalculoResultadoDto updateGrupoMedicamento (@PathVariable int id, @RequestBody CalculoDto calculoDto) {
+	public @ResponseBody CalculoResultadoDto updateGrupoMedicamento (@PathVariable Long id, @RequestBody CalculoDto calculoDto) {
 		return this.calculoService.calcular(id, calculoDto); 
 	}
 

@@ -47,13 +47,13 @@ INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(2,'IV - Intr
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(3,'IV direto - Intravenoso direto');
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(4,'IV infusao - Intravenoso infusao');
 
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (1, 'Zovirax', 1, 1, 250, null, 'FR/AMP','mg');
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (2, 'Ezopen', 1, 2, 250, null, 'FR/AMP','mg');
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (3, 'Aciclovir', 2, 1, 250, null, 'FR/AMP','mg');
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (4, 'Univir', 1, 3, 250, null, 'FR/AMP','mg');
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (5, 'Zynvir', 1, 4, 250, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (1, 'Zovirax', 1, 1, 250, null, 'FRASCOAMPOLA','MILIGRAMA');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (2, 'Ezopen', 1, 2, 250, null, 'FRASCOAMPOLA','MILIGRAMA');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (3, 'Aciclovir', 2, 1, 250, null, 'FRASCOAMPOLA','MILIGRAMA');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (4, 'Univir', 1, 3, 250, null, 'FRASCOAMPOLA','MILIGRAMA');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (5, 'Zynvir', 1, 4, 250, null, 'FRASCOAMPOLA','MILIGRAMA');
 
-INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (50, 'Cilinon', 4, 6, 500, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (50, 'Cilinon', 4, 6, 500, null, 'FRASCOAMPOLA','MILIGRAMA');
 INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (50, 1, 1, null,  2, 250, 'AD', 'IM: 2 ml AD');
 INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (50, 1, 2,    2, 18,  25, 'SF', 'Aspirar 1 frasco + 18 ml SF = 25 mg/ml');
 

@@ -20,6 +20,15 @@ public class DiluicaoConfiguracaoEntity {
 	@EqualsAndHashCode.Include
 	private DiluicaoConfiguracaoEntityPK compId;
 
+    @Column(name = "medicamento_id", nullable = false, insertable = false, updatable = false)
+	private Long medicamentoId;
+
+    @Column(name = "via_administracao_id", nullable = false, insertable = false, updatable = false)
+	private Long viaAdministracaoId;
+
+    @Column(name="sequencia", nullable = false, insertable = false, updatable = false)	
+    private Long sequencia;
+
     @Column(name = "quantidade_aspirada", nullable = true)
     private BigDecimal quantidadeAspirada;
 
