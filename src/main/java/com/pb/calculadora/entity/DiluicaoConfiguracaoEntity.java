@@ -32,13 +32,13 @@ public class DiluicaoConfiguracaoEntity {
     @Column(name = "quantidade_aspirada", nullable = true)
     private BigDecimal quantidadeAspirada;
 
-    @Column(name = "quantidade_adicionada")
+    @Column(name = "quantidade_adicionada", nullable = false)
     private BigDecimal quantidadeAdicionada;
 
-    @Column(name = "concentracao")
+    @Column(name = "concentracao", nullable = false)
     private BigDecimal concentracao;
 
-    @Column(name = "diluente")
+    @Column(name = "diluente", nullable = false)
     @Enumerated(EnumType.STRING)
     private EnumDiluente diluente;
 
