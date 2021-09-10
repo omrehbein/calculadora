@@ -20,7 +20,7 @@ public class GrupoMedicamentoMapper {
         return new PropertyMap<GrupoMedicamentoEntity, GrupoMedicamentoDto>() {
             @Override
             protected void configure() {
-                map(source.getId()).setIdentificadr(null);
+                map(source.getId()).setIdentificador(null);
             }
         };
     }

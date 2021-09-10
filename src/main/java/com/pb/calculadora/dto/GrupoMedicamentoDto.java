@@ -2,19 +2,20 @@ package com.pb.calculadora.dto;
 
 public class GrupoMedicamentoDto {
 
-    private Long identificadr;
+    private Long identificador;
 
     private String nome;
 
     private String descritivo;
 
 
-    public Long getIdentificadr() {
-        return identificadr;
+
+    public Long getIdentificador() {
+        return identificador;
     }
 
-    public void setIdentificadr(Long identificadr) {
-        this.identificadr = identificadr;
+    public void setIdentificador(Long identificador) {
+        this.identificador = identificador;
     }
 
     public String getNome() {

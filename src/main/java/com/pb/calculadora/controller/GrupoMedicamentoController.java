@@ -40,8 +40,8 @@ public class GrupoMedicamentoController {
 		return null;//modelMapper.map(this.agendaService.createAgenda(descricao), AgendaDto.class); 
 	}
 
-    @PutMapping(path="{grupoMedicamentId}/atualizar")
-	public @ResponseBody GrupoMedicamentoEntity updateGrupoMedicamento (@PathVariable int grupoMedicamentId, @RequestParam GrupoMedicamentoEntity grupoMedicamento) {
+    @PutMapping(path="{id}/atualizar")
+	public @ResponseBody GrupoMedicamentoEntity updateGrupoMedicamento (@PathVariable int id, @RequestParam GrupoMedicamentoEntity grupoMedicamento) {
 		return null;//modelMapper.map(this.agendaService.createAgenda(descricao), AgendaDto.class); 
 	}
 
