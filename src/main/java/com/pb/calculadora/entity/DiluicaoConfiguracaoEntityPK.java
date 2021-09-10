@@ -17,11 +17,11 @@ public class DiluicaoConfiguracaoEntityPK implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "medicamento_id", referencedColumnName = "id", nullable = false, insertable = true, updatable = true)
 	private MedicamentoEntity medicamento;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "via_administracao_id", referencedColumnName = "id", nullable = false, insertable = true, updatable = true)
 	private ViaAdministracaoEntity viaAdministracao;
 
