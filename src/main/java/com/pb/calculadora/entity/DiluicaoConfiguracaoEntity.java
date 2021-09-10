@@ -29,11 +29,11 @@ public class DiluicaoConfiguracaoEntity {
     @Column(name = "concentracao")
     private BigDecimal concentracao;
 
-    @Column(name = "modo_preparo", nullable = true)
-    private String modoPreparo;
-
     @Column(name = "diluente")
     @Enumerated(EnumType.STRING)
     private EnumDiluente diluente;
+
+    @Column(name = "modo_preparo", nullable = true)
+    private String modoPreparo;
 
 }

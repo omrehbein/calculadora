@@ -51,3 +51,11 @@ INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`labo
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (3, 'Aciclovir', 2, 1, 250, null, 'FR/AMP','mg');
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (4, 'Univir', 1, 3, 250, null, 'FR/AMP','mg');
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (5, 'Zynvir', 1, 4, 250, null, 'FR/AMP','mg');
+
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (50, 'Cilinon', 4, 6, 500, null, 'FR/AMP','mg');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (50, 1, 1, null,  2, 250, 'AD', 'IM: 2 ml AD');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (50, 1, 2,    2, 18,  25, 'SF', 'Aspirar 1 frasco + 18 ml SF = 25 mg/ml');
+
+
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (1, 1, 1, null, 10.0, 25, 'AD', 'IV Infusão: 10 ml de AD');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`quantidade_aspirada`,`quantidade_adicionada`,`concentracao`,`diluente`,`modo_preparo`) VALUES (1, 1, 2,   1, 02.5, 07, 'SF', 'Aspirar 1 ml do frasco + 2,5ml de SF 0,9% = 7 mg/ml');
