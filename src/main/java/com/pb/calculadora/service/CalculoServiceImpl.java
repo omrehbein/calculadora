@@ -43,21 +43,25 @@ public class CalculoServiceImpl implements CalculoService {
     @Override
     public CalculoResultadoDto calcular(Long medicamentoId, CalculoDto calculoDto) {
 
+        
         MedicamentoEntity medicamentoEntity = this.medicamentoRepository.findById(medicamentoId).orElseThrow(() -> new RecordNotFoundException("Medicamento não Encontrado"));
 
-        CalculoResultadoDto calculoResultadoDto = new CalculoResultadoDto();
-        calculoResultadoDto.setPassosAdministracao(new ArrayList<String>());
-        calculoResultadoDto.setInfoList(new ArrayList<String>());
+        BigDecimal volumeAtual = new BigDecimal(0);
+        BigDecimal quantidadeApresentacaoAtual = medicamentoEntity.getQuantidadeApresentacao();
 
-        BigDecimal indicePercentual = this.getIndice(calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getQuantidadeApresentacao() );
+        CalculoResultadoDto calculoResultadoDto = this.getCalculoResultadoDto();
+
+        calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Prescrição {0} {1}", calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getUnidadeMedida().getSigla()));
+        
+        BigDecimal indicePercentual = this.getIndice(calculoDto.getQuantidadeAdministrar(), quantidadeApresentacaoAtual );
         calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("O indice percentual de {0} sobre {1} é {2}", calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getQuantidadeApresentacao(), indicePercentual));
         
         List<DiluicaoConfiguracaoEntity> diluicaoConfiguracaoEntitys = this.diluicaoConfiguracaoRepository.findAllByMedicamentoIdAndViaAdministracaoIdOrderBySequencia(medicamentoId, calculoDto.getViaAdministracaoId());
         
-        BigDecimal volumeAtual = new BigDecimal(0);
 
-        if (medicamentoEntity.getConcentracaoInicial() != null){
-            volumeAtual = medicamentoEntity.getConcentracaoInicial().multiply(medicamentoEntity.getQuantidadeApresentacao());//TODO pode ser um campo de volume 
+
+        if (medicamentoEntity.getConcentracaoInicial() != null) {
+            volumeAtual = medicamentoEntity.getConcentracaoInicial().multiply(quantidadeApresentacaoAtual);//TODO pode ser um campo de volume 
             calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Concentracao inicial do medicamento é {0}.", medicamentoEntity.getConcentracaoInicial()));
         }
 
@@ -65,7 +69,7 @@ public class CalculoServiceImpl implements CalculoService {
             if (diluicaoConfiguracaoEntity.getVolumeAspirado() != null){
                 calculoResultadoDto.getPassosAdministracao().add(
                     MessageFormat.format(
-                        "Aspire {0} ml do processo anterior", 
+                        "Aspire {0} ml do processo anterior;", 
                         diluicaoConfiguracaoEntity.getVolumeAspirado()
                     )
                 );
@@ -83,12 +87,22 @@ public class CalculoServiceImpl implements CalculoService {
             );
             
             volumeAtual = diluicaoConfiguracaoEntity.getVolumeFinal();
+            quantidadeApresentacaoAtual = diluicaoConfiguracaoEntity.getVolumeFinal().multiply(diluicaoConfiguracaoEntity.getConcentracao());
         }
 
         BigDecimal resultado = volumeAtual.multiply(indicePercentual);
 
+        calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Aplicando o indice percentual de {0} sobre {1} ml = {2} ml", indicePercentual, volumeAtual, resultado));
+
         calculoResultadoDto.setInfoAdministracao(MessageFormat.format("Aspire {0} ml.", resultado));
 
+        return calculoResultadoDto;
+    }
+
+    private CalculoResultadoDto getCalculoResultadoDto() {
+        CalculoResultadoDto calculoResultadoDto = new CalculoResultadoDto();
+        calculoResultadoDto.setPassosAdministracao(new ArrayList<String>());
+        calculoResultadoDto.setInfoList(new ArrayList<String>());
         return calculoResultadoDto;
     }
 

@@ -42,6 +42,8 @@ INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (26, 'Sulfame
 INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (27, 'Teicoplanina');
 INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (28, 'Vancomicina');
 
+INSERT INTO `calculadora`.`grupo_medicamento` (`id`,`nome`) VALUES (100, 'Piperacilina + Tazobactam');
+
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(1,'IM - Intramuscular');
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(2,'IV - Intravenoso');
 INSERT INTO `calculadora`.`via_administracao` (`id`, `nome`) VALUES(3,'IV direto - Intravenoso direto');
@@ -58,3 +60,6 @@ INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_adminis
 INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`,`modo_preparo`) VALUES (50, 1, 2,    2, 18, 20, 25, 'SF', 'Em seringa de 20ml, aspirar 2ml do pó diluído e completar com 18ml SF - Aspirar 1 frasco + 18 ml SF = 25 mg/ml');
 
 
+INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (100, 'Piperacilina + Tazobactan', 100, 4, 4000, null, 'FRASCOAMPOLA','MILIGRAMA');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 1, null,  20,  23, 173.91, 'AD');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 2,  2.5,  3,  5.5, 80, 'SF');
