@@ -1,6 +1,7 @@
 package com.pb.calculadora.service;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,30 +42,57 @@ public class CalculoServiceImpl implements CalculoService {
 
     @Override
     public CalculoResultadoDto calcular(Long medicamentoId, CalculoDto calculoDto) {
-        MedicamentoEntity medicamentoEntity = this.medicamentoRepository.findById(medicamentoId)
-            .orElseThrow(() -> new RecordNotFoundException("Medicamento não Encontrado"));
-        
-        List<DiluicaoConfiguracaoEntity> diluicaoConfiguracaoEntitys = this.diluicaoConfiguracaoRepository.findAllByMedicamentoIdAndViaAdministracaoIdOrderBySequencia(medicamentoId, calculoDto.getViaAdministracaoId());
-        
-        //medicamentoEntity.get
-        for (DiluicaoConfiguracaoEntity diluicaoConfiguracaoEntity : diluicaoConfiguracaoEntitys){
 
-            medicamentoEntity.getConcentracaoInicial();
-            
-        }
+        MedicamentoEntity medicamentoEntity = this.medicamentoRepository.findById(medicamentoId).orElseThrow(() -> new RecordNotFoundException("Medicamento não Encontrado"));
 
         CalculoResultadoDto calculoResultadoDto = new CalculoResultadoDto();
-
-        calculoResultadoDto.setInfoAdministracao("Resultado da Aspiração é (5,34 ml).");
-
         calculoResultadoDto.setPassosAdministracao(new ArrayList<String>());
         calculoResultadoDto.setInfoList(new ArrayList<String>());
 
-        calculoResultadoDto.getPassosAdministracao().add("Diluir o pó com 2ml e misturar - IM: 2 ml AD");
-        calculoResultadoDto.getPassosAdministracao().add("Em seringa de 20ml, aspirar 2ml do pó diluído e completar com 18ml SF - Aspirar 1 frasco + 18 ml SF = 25 mg/ml");
+        BigDecimal indicePercentual = this.getIndice(calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getQuantidadeApresentacao() );
+        calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("O indice percentual de {0} sobre {1} é {2}", calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getQuantidadeApresentacao(), indicePercentual));
+        
+        List<DiluicaoConfiguracaoEntity> diluicaoConfiguracaoEntitys = this.diluicaoConfiguracaoRepository.findAllByMedicamentoIdAndViaAdministracaoIdOrderBySequencia(medicamentoId, calculoDto.getViaAdministracaoId());
+        
+        BigDecimal volumeAtual = new BigDecimal(0);
 
-        calculoResultadoDto.getInfoList().add("É necessário adicionar a permeabilização ao resultado");
+        if (medicamentoEntity.getConcentracaoInicial() != null){
+            volumeAtual = medicamentoEntity.getConcentracaoInicial().multiply(medicamentoEntity.getQuantidadeApresentacao());//TODO pode ser um campo de volume 
+            calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Concentracao inicial do medicamento é {0}.", medicamentoEntity.getConcentracaoInicial()));
+        }
+
+        for (DiluicaoConfiguracaoEntity diluicaoConfiguracaoEntity : diluicaoConfiguracaoEntitys) {
+            if (diluicaoConfiguracaoEntity.getVolumeAspirado() != null){
+                calculoResultadoDto.getPassosAdministracao().add(
+                    MessageFormat.format(
+                        "Aspire {0} ml do processo anterior", 
+                        diluicaoConfiguracaoEntity.getVolumeAspirado()
+                    )
+                );
+            }
+
+            calculoResultadoDto.getPassosAdministracao().add(
+                MessageFormat.format(
+                    "Adicione {0} ml de {1} ficando {2} ml com concentracao = {3} {4}/ml.", 
+                    diluicaoConfiguracaoEntity.getVolumeAdicionado(),
+                    diluicaoConfiguracaoEntity.getDiluente().getNome(),
+                    diluicaoConfiguracaoEntity.getVolumeFinal(),
+                    diluicaoConfiguracaoEntity.getConcentracao(),
+                    medicamentoEntity.getUnidadeMedida().getSigla()
+                )
+            );
+            
+            volumeAtual = diluicaoConfiguracaoEntity.getVolumeFinal();
+        }
+
+        BigDecimal resultado = volumeAtual.multiply(indicePercentual);
+
+        calculoResultadoDto.setInfoAdministracao(MessageFormat.format("Aspire {0} ml.", resultado));
 
         return calculoResultadoDto;
+    }
+
+    private BigDecimal getIndice(BigDecimal quantidadeAdministrar, BigDecimal quantidadeApresentacao) {
+        return quantidadeAdministrar.divide(quantidadeApresentacao);
     }
 }

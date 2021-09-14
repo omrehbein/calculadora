@@ -1,9 +1,9 @@
 package com.pb.calculadora.entity.enums;
 
 public enum EnumDiluente {
-    AD("AD", "AGUADESTILADA"),
-    SF("SF", "SOROFISIOLOGICO"),
-    SG("SG", "SOROGLICOSE");
+    AD("AD", "Agua Destilada"),
+    SF("SF", "Soro Fisiologico"),
+    SG("SG", "Soro Glicose");
 
     private final String sigla;
     private final String nome;

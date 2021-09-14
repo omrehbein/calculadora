@@ -29,11 +29,16 @@ public class DiluicaoConfiguracaoEntity {
     @Column(name="sequencia", nullable = false, insertable = false, updatable = false)	
     private Long sequencia;
 
-    @Column(name = "quantidade_aspirada", nullable = true)
-    private BigDecimal quantidadeAspirada;
 
-    @Column(name = "quantidade_adicionada", nullable = false)
-    private BigDecimal quantidadeAdicionada;
+    @Column(name = "volume_aspirado")
+    private BigDecimal volumeAspirado;
+
+    @Column(name = "volume_adicionado", nullable = false)
+    private BigDecimal volumeAdicionado;
+
+    @Column(name = "volume_final", nullable = false)
+    private BigDecimal volumeFinal;
+
 
     @Column(name = "concentracao", nullable = false)
     private BigDecimal concentracao;
@@ -42,7 +47,7 @@ public class DiluicaoConfiguracaoEntity {
     @Enumerated(EnumType.STRING)
     private EnumDiluente diluente;
 
-    @Column(name = "modo_preparo", nullable = true)
+    @Column(name = "modo_preparo")
     private String modoPreparo;
 
 }

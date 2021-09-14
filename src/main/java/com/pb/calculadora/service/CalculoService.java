@@ -5,7 +5,7 @@ import com.pb.calculadora.dto.CalculoResultadoDto;
 
 public interface CalculoService {
 
-    CalculoResultadoDto calcular(Long id, CalculoDto calculoDto);
+    CalculoResultadoDto calcular(Long medicamentoId, CalculoDto calculoDto);
 
 
 }
