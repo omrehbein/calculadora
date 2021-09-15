@@ -4,13 +4,10 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.pb.calculadora.dto.CalculoDto;
 import com.pb.calculadora.dto.CalculoResultadoDto;
-import com.pb.calculadora.dto.GrupoMedicamentoDto;
 import com.pb.calculadora.entity.DiluicaoConfiguracaoEntity;
-import com.pb.calculadora.entity.GrupoMedicamentoEntity;
 import com.pb.calculadora.entity.MedicamentoEntity;
 import com.pb.calculadora.exceptions.RecordNotFoundException;
 import com.pb.calculadora.repository.DiluicaoConfiguracaoRepository;
@@ -24,9 +21,7 @@ import org.springframework.stereotype.Service;
 public class CalculoServiceImpl implements CalculoService {
 
     private DiluicaoConfiguracaoRepository diluicaoConfiguracaoRepository;
-    private GrupoMedicamentoRepository grupoMedicamentoRepository;
     private MedicamentoRepository medicamentoRepository;
-    private ModelMapper modelMapper;
     
     public CalculoServiceImpl(
         DiluicaoConfiguracaoRepository diluicaoConfiguracaoRepository,
@@ -35,9 +30,7 @@ public class CalculoServiceImpl implements CalculoService {
         ModelMapper modelMapper
     ){
         this.diluicaoConfiguracaoRepository = diluicaoConfiguracaoRepository;
-        this.grupoMedicamentoRepository = grupoMedicamentoRepository;
         this.medicamentoRepository = medicamentoRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -103,9 +96,5 @@ public class CalculoServiceImpl implements CalculoService {
         calculoResultadoDto.setPassosAdministracao(new ArrayList<String>());
         calculoResultadoDto.setInfoList(new ArrayList<String>());
         return calculoResultadoDto;
-    }
-
-    private BigDecimal getIndice(BigDecimal quantidadeAdministrar, BigDecimal quantidadeApresentacao) {
-        return quantidadeAdministrar.divide(quantidadeApresentacao);
     }
 }
