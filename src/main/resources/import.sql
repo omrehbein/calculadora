@@ -61,5 +61,5 @@ INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_adminis
 
 
 INSERT INTO `calculadora`.`medicamento`(`id`,`nome`,`grupo_medicamento_id`,`laboratorio_id`,`quantidade_apresentacao`,`concentracao_inicial`,`embalagem_apresentada`,`unidade_medida`) VALUES (100, 'Piperacilina + Tazobactan', 100, 4, 4000, null, 'FRASCOAMPOLA','MILIGRAMA');
-INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 1, null,  20,  23, 173.91, 'AD');
-INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 2,  2.5,  3,  5.5, 80, 'SF');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 1, null,  20, 23.00, 173.91, 'AD');
+INSERT INTO `calculadora`.`diluicao_configuracao` (`medicamento_id`,`via_administracao_id`,`sequencia`,`volume_aspirado`,`volume_adicionado`,`volume_final`,`concentracao`,`diluente`) VALUES (100, 2, 2,  2.5,  3,   5.50,  80.00, 'SF');
