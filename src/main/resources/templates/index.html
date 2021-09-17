@@ -2,32 +2,69 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-		<!--These jQuery libraries for
-		chosen need to be included-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css" />
-
-		<!--These jQuery libraries for select2
-			need to be included-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
 		<script>
 			$(document).ready(function () {
-                $('.js-data-example-ajax').select2({
+                $('.js-data-medicamento-ajax').select2({
+					placeholder: "Selecione um medicamento",
                     ajax: {
                         url: '/Medicamento/select2',
                         dataType: 'json'
                         // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
                     }
                 });
+
+
+                $('.js-data-via-administracao-ajax').select2({
+					placeholder: "Selecione uma via de admistracao",
+                    ajax: {
+                        url: '/ViaAdministracao/select2',
+                        dataType: 'json'
+                        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+                    }
+                });
+
+				$('#btCalcular').click(function(){
+					const medicamentoId = $(".js-data-medicamento-ajax option:selected").val();
+					const viaAdministracaoId = $(".js-data-via-administracao-ajax option:selected").val();
+					const quantidadeAdministrar = $("#quantidadeAdministrar").val();
+
+					
+					$.post({
+						url: `/Medicamento/${medicamentoId}/calcular`,
+						data: JSON.stringify({viaAdministracaoId: viaAdministracaoId, quantidadeAdministrar: quantidadeAdministrar}),
+						success: function(data, status, jqXHR) {// success callback
+							$( "#result" ).empty().append('status: ' + status + ', data: ' + JSON.stringify(data));
+						},
+						error: function(data, status, jqXHR) {// success callback
+							$( "#result" ).empty().append('status: ' + status + ', data: ' + JSON.stringify(data));
+						},
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+					});
+
+				});
 			});
 		</script>
 	</head>
 	<body>
 		<form>
-			<h4>Escolha o medicamento</h4>
-			<select class="js-data-example-ajax" style="width: 200px;"></select>
+			<select class="js-data-medicamento-ajax" style="width: 400px;"></select>
+            <br>
+			<br>
+			<select class="js-data-via-administracao-ajax" style="width: 400px;"></select>
+			<br>
+			<br>
+            <h4>Quantidade Prescrita:</h4>
+			<input type="text" id="quantidadeAdministrar" name="quantidadeAdministrar">
+			<br>
+			<br>
+			<button type="button" id="btCalcular">Calcular</button>
+			<br>
+			<div id="result"></div>
 		</form>
 	</body>
     <!--https://www.geeksforgeeks.org/explain-chosen-and-select2-with-examples/-->

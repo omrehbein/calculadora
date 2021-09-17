@@ -2,6 +2,7 @@ package com.pb.calculadora.configurations;
 
 import com.pb.calculadora.mapper.GrupoMedicamentoMapper;
 import com.pb.calculadora.mapper.MedicamentoMapper;
+import com.pb.calculadora.mapper.ViaAdministracaoMapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -18,7 +19,7 @@ public class ModelMapperConfig {
 		
 		GrupoMedicamentoMapper.map(modelMapper);
 		MedicamentoMapper.map(modelMapper);
-		
+		ViaAdministracaoMapper.map(modelMapper);
 		return modelMapper;
 	}
 }
