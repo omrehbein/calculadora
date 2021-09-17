@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.pb.calculadora.dto.GrupoMedicamentoDto;
+import com.pb.calculadora.dto.Select2Dto;
+import com.pb.calculadora.dto.Select2ResultDto;
 import com.pb.calculadora.entity.GrupoMedicamentoEntity;
 import com.pb.calculadora.entity.MedicamentoEntity;
 import com.pb.calculadora.repository.GrupoMedicamentoRepository;
@@ -45,5 +47,17 @@ public class MedicamentoServiceImpl implements MedicamentoService {
     @Override
     public List<MedicamentoEntity> medicamentos() {
         return this.medicamentoRepository.findAll();
+    }
+
+    @Override
+    public Select2Dto select2(String term) {
+        List<MedicamentoEntity> medicamentoEntitys = this.medicamentoRepository.findAllByNomeContainingIgnoreCaseOrderById(term);
+        Select2Dto select2Dto = new Select2Dto();
+        select2Dto.setResults(
+            medicamentoEntitys.stream().map( 
+                entity -> this.modelMapper.map(entity, Select2ResultDto.class)
+            ).collect(Collectors.toList())
+        );
+        return select2Dto;
     }
 }

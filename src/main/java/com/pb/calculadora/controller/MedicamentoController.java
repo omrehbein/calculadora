@@ -2,6 +2,7 @@ package com.pb.calculadora.controller;
 
 import com.pb.calculadora.dto.CalculoDto;
 import com.pb.calculadora.dto.CalculoResultadoDto;
+import com.pb.calculadora.dto.Select2Dto;
 import com.pb.calculadora.entity.MedicamentoEntity;
 import com.pb.calculadora.service.CalculoService;
 import com.pb.calculadora.service.MedicamentoService;
@@ -35,10 +36,9 @@ public class MedicamentoController {
     }
 
     @Operation(summary = "medicamentos")
-    @GetMapping(path="/listar")
-    public ResponseEntity<List<MedicamentoEntity>> listar() {
-        List<MedicamentoEntity> result = this.medicamentoService.medicamentos();
-        return ResponseEntity.ok(result);
+    @GetMapping(path="/select2")
+    public ResponseEntity<Select2Dto> select2(@RequestParam String term) {
+        return ResponseEntity.ok(this.medicamentoService.select2(term));
     }
 
     @PostMapping(path="/criar")
