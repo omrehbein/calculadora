@@ -1,6 +1,7 @@
 package com.pb.calculadora.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import com.pb.calculadora.dto.CalculoDto;
 import com.pb.calculadora.dto.CalculoResultadoDto;
 import com.pb.calculadora.entity.DiluicaoConfiguracaoEntity;
 import com.pb.calculadora.entity.MedicamentoEntity;
+import com.pb.calculadora.exceptions.ExceedsConfiguredLimitException;
 import com.pb.calculadora.exceptions.RecordNotFoundException;
 import com.pb.calculadora.repository.DiluicaoConfiguracaoRepository;
 import com.pb.calculadora.repository.GrupoMedicamentoRepository;
@@ -16,6 +18,7 @@ import com.pb.calculadora.repository.MedicamentoRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class CalculoServiceImpl implements CalculoService {
@@ -46,8 +49,8 @@ public class CalculoServiceImpl implements CalculoService {
         calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Prescrição {0} {1}", calculoDto.getQuantidadeAdministrar(), medicamentoEntity.getUnidadeMedida().getSigla()));
         
         List<DiluicaoConfiguracaoEntity> diluicaoConfiguracaoEntitys = this.diluicaoConfiguracaoRepository.findAllByMedicamentoIdAndViaAdministracaoIdOrderBySequencia(medicamentoId, calculoDto.getViaAdministracaoId());
-        
 
+        this.fillInformacao(medicamentoEntity, calculoResultadoDto);
 
         if (medicamentoEntity.getConcentracaoInicial() != null) {
             volumeAtual = medicamentoEntity.getConcentracaoInicial().multiply(medicamentoEntity.getQuantidadeApresentacao());//TODO pode ser um campo de volume 
@@ -80,15 +83,29 @@ public class CalculoServiceImpl implements CalculoService {
             concentracaoAtual = diluicaoConfiguracaoEntity.getConcentracao();
         }
 
-        BigDecimal volumeAspirar = calculoDto.getQuantidadeAdministrar().divide(concentracaoAtual);
+        BigDecimal volumeAspirar = calculoDto.getQuantidadeAdministrar().divide(concentracaoAtual, 2, RoundingMode.HALF_UP);
 
-        if (volumeAspirar.longValue() > volumeAtual.longValue()){
-            throw new RuntimeException("Volume a aspirar excede o volume resultante do frasco.");
+        if (volumeAspirar.compareTo(volumeAtual) > 0){
+            throw new ExceedsConfiguredLimitException(MessageFormat.format("Volume a aspirar {0} excede o volume resultante do frasco {1}.", volumeAspirar, volumeAtual));
         }
 
         calculoResultadoDto.setInfoAdministracao(MessageFormat.format("Aspire {0} ml.", volumeAspirar));
 
         return calculoResultadoDto;
+    }
+
+    private void fillInformacao(MedicamentoEntity medicamentoEntity, CalculoResultadoDto calculoResultadoDto) {
+        if (StringUtils.hasText(medicamentoEntity.getInfoSobra())){
+            calculoResultadoDto.getInfoList().add(MessageFormat.format("Info Sobra: {0}", medicamentoEntity.getInfoSobra()));
+        }
+
+        if (StringUtils.hasText(medicamentoEntity.getInfoTempoAdministracao())){
+            calculoResultadoDto.getInfoList().add(MessageFormat.format("Tempo Administracão: {0}", medicamentoEntity.getInfoTempoAdministracao()));
+        }
+
+        if (StringUtils.hasText(medicamentoEntity.getInfoObservacao())){
+            calculoResultadoDto.getInfoList().add(MessageFormat.format("Observação: {0}", medicamentoEntity.getInfoObservacao()));
+        }
     }
 
     private CalculoResultadoDto getCalculoResultadoDto() {

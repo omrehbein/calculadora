@@ -7,6 +7,13 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
 		<script>
+			function print(data, status, jqXHR){
+				$( "#status" ).empty().append('status: ' + status);
+				const json = JSON.stringify(data, null, 2);
+				$( "#result" ).val(json);
+				console.log(json);
+			}
+
 			$(document).ready(function () {
                 $('.js-data-medicamento-ajax').select2({
 					placeholder: "Selecione um medicamento",
@@ -17,7 +24,6 @@
                     }
                 });
 
-
                 $('.js-data-via-administracao-ajax').select2({
 					placeholder: "Selecione uma via de admistracao",
                     ajax: {
@@ -27,32 +33,46 @@
                     }
                 });
 
-				$('#btCalcular').click(function(){
+				$('#btVerConfiguracao').click(function(){
 					const medicamentoId = $(".js-data-medicamento-ajax option:selected").val();
-					const viaAdministracaoId = $(".js-data-via-administracao-ajax option:selected").val();
-					const quantidadeAdministrar = $("#quantidadeAdministrar").val();
-
-					
-					$.post({
-						url: `/Medicamento/${medicamentoId}/calcular`,
-						data: JSON.stringify({viaAdministracaoId: viaAdministracaoId, quantidadeAdministrar: quantidadeAdministrar}),
-						success: function(data, status, jqXHR) {// success callback
-							$( "#result" ).empty().append('status: ' + status + ', data: ' + JSON.stringify(data));
+					$.get({
+						url: `/Medicamento/${medicamentoId}/configuracao`,
+						success: function(data, status, jqXHR){
+							print(data, status, jqXHR);
 						},
-						error: function(data, status, jqXHR) {// success callback
-							$( "#result" ).empty().append('status: ' + status + ', data: ' + JSON.stringify(data));
+						error: function(data, status, jqXHR){
+							print(data, status, jqXHR);
 						},
 						contentType: "application/json; charset=utf-8",
 						dataType: "json",
 					});
-
 				});
+
+				$('#btCalcular').click(function(){
+					const medicamentoId = $(".js-data-medicamento-ajax option:selected").val();
+					const viaAdministracaoId = $(".js-data-via-administracao-ajax option:selected").val();
+					const quantidadeAdministrar = $("#quantidadeAdministrar").val();
+					$.post({
+						url: `/Medicamento/${medicamentoId}/calcular`,
+						data: JSON.stringify({viaAdministracaoId: viaAdministracaoId, quantidadeAdministrar: quantidadeAdministrar}),
+						success: function(data, status, jqXHR){
+							print(data, status, jqXHR);
+						},
+						error: function(data, status, jqXHR){
+							print(data, status, jqXHR);
+						},
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+					});
+				});
+
 			});
 		</script>
 	</head>
 	<body>
 		<form>
 			<select class="js-data-medicamento-ajax" style="width: 400px;"></select>
+			<button type="button" id="btVerConfiguracao">Ver Configuracao</button>
             <br>
 			<br>
 			<select class="js-data-via-administracao-ajax" style="width: 400px;"></select>
@@ -64,7 +84,9 @@
 			<br>
 			<button type="button" id="btCalcular">Calcular</button>
 			<br>
-			<div id="result"></div>
+			<div id="status"></div>
+			<br>
+			<textarea id="result" name="result" rows="50" cols="200"></textarea>
 		</form>
 	</body>
     <!--https://www.geeksforgeeks.org/explain-chosen-and-select2-with-examples/-->

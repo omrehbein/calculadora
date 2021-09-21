@@ -2,6 +2,8 @@ package com.pb.calculadora.controller;
 
 import com.pb.calculadora.dto.CalculoDto;
 import com.pb.calculadora.dto.CalculoResultadoDto;
+import com.pb.calculadora.dto.ConfiguracaoDto;
+import com.pb.calculadora.dto.ConfiguracaoItemDto;
 import com.pb.calculadora.dto.Select2Dto;
 import com.pb.calculadora.entity.MedicamentoEntity;
 import com.pb.calculadora.service.CalculoService;
@@ -41,15 +43,15 @@ public class MedicamentoController {
         return ResponseEntity.ok(this.medicamentoService.select2(term));
     }
 
-    @PostMapping(path="/criar")
-	public @ResponseBody MedicamentoEntity createAgenda (@RequestParam String descricao) {
-		return null;//modelMapper.map(this.agendaService.createAgenda(descricao), AgendaDto.class); 
-	}
-
     @PostMapping(path="{id}/calcular")
 	public @ResponseBody CalculoResultadoDto updateGrupoMedicamento (@PathVariable Long id, @RequestBody CalculoDto calculoDto) {
 		return this.calculoService.calcular(id, calculoDto); 
 	}
 
+    @Operation(summary = "configuracao")
+    @GetMapping(path="{id}/configuracao")
+    public ResponseEntity<ConfiguracaoDto> configuracao(@PathVariable Long id) {
+        return ResponseEntity.ok(this.medicamentoService.configuracao(id));
+    }
 
 }

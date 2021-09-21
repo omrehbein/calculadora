@@ -1,5 +1,6 @@
 package com.pb.calculadora.configurations;
 
+import com.pb.calculadora.mapper.DiluicaoConfiguracaoMapper;
 import com.pb.calculadora.mapper.GrupoMedicamentoMapper;
 import com.pb.calculadora.mapper.MedicamentoMapper;
 import com.pb.calculadora.mapper.ViaAdministracaoMapper;
@@ -20,6 +21,7 @@ public class ModelMapperConfig {
 		GrupoMedicamentoMapper.map(modelMapper);
 		MedicamentoMapper.map(modelMapper);
 		ViaAdministracaoMapper.map(modelMapper);
+		DiluicaoConfiguracaoMapper.map(modelMapper);
 		return modelMapper;
 	}
 }

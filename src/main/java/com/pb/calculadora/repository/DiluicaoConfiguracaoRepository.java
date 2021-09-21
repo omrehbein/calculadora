@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DiluicaoConfiguracaoRepository extends JpaRepository<DiluicaoConfiguracaoEntity, DiluicaoConfiguracaoEntityPK> {
 
+    List<DiluicaoConfiguracaoEntity> findAllByMedicamentoIdOrderByViaAdministracaoIdAscSequenciaAsc(Long medicamentoId);
     List<DiluicaoConfiguracaoEntity> findAllByMedicamentoIdAndViaAdministracaoIdOrderBySequencia(Long medicamentoId, Long viaAdministracaoId);
 }
