@@ -12,6 +12,7 @@ import com.pb.calculadora.entity.DiluicaoConfiguracaoEntity;
 import com.pb.calculadora.entity.MedicamentoEntity;
 import com.pb.calculadora.exceptions.ExceedsConfiguredLimitException;
 import com.pb.calculadora.exceptions.RecordNotFoundException;
+import com.pb.calculadora.exceptions.UndefinedConcentrationException;
 import com.pb.calculadora.repository.DiluicaoConfiguracaoRepository;
 import com.pb.calculadora.repository.GrupoMedicamentoRepository;
 import com.pb.calculadora.repository.MedicamentoRepository;
@@ -55,7 +56,7 @@ public class CalculoServiceImpl implements CalculoService {
         if (medicamentoEntity.getConcentracaoInicial() != null) {
             volumeAtual = medicamentoEntity.getConcentracaoInicial().multiply(medicamentoEntity.getQuantidadeApresentacao());//TODO pode ser um campo de volume 
             concentracaoAtual = medicamentoEntity.getConcentracaoInicial();
-            calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Concentracao inicial do medicamento é {0}.", medicamentoEntity.getConcentracaoInicial()));
+            calculoResultadoDto.getPassosAdministracao().add(MessageFormat.format("Concentracao inicial do medicamento é {0} {1}/ml.", medicamentoEntity.getConcentracaoInicial(), medicamentoEntity.getUnidadeMedida().getSigla()));
         }
 
         for (DiluicaoConfiguracaoEntity diluicaoConfiguracaoEntity : diluicaoConfiguracaoEntitys) {
@@ -83,10 +84,14 @@ public class CalculoServiceImpl implements CalculoService {
             concentracaoAtual = diluicaoConfiguracaoEntity.getConcentracao();
         }
 
+        if (concentracaoAtual.equals(BigDecimal.ZERO)){
+            throw new ExceedsConfiguredLimitException("Concentração não foi definida. Verifique a configuracao!");
+        }
+
         BigDecimal volumeAspirar = calculoDto.getQuantidadeAdministrar().divide(concentracaoAtual, 2, RoundingMode.HALF_UP);
 
         if (volumeAspirar.compareTo(volumeAtual) > 0){
-            throw new ExceedsConfiguredLimitException(MessageFormat.format("Volume a aspirar {0} excede o volume resultante do frasco {1}.", volumeAspirar, volumeAtual));
+            throw new UndefinedConcentrationException(MessageFormat.format("Volume a aspirar {0} excede o volume resultante do frasco {1}.", volumeAspirar, volumeAtual));
         }
 
         calculoResultadoDto.setInfoAdministracao(MessageFormat.format("Aspire {0} ml.", volumeAspirar));

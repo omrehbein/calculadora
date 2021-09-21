@@ -3,6 +3,7 @@ package com.pb.calculadora.exceptions.handlers;
 import com.pb.calculadora.dto.DefaultErrorDto;
 import com.pb.calculadora.exceptions.ExceedsConfiguredLimitException;
 import com.pb.calculadora.exceptions.RecordNotFoundException;
+import com.pb.calculadora.exceptions.UndefinedConcentrationException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class RestExceptionHandler {
 	}
 
 	@ExceptionHandler({ExceedsConfiguredLimitException.class})
-	public final ResponseEntity<Object> handleVolumeAspiradoExcedeLimiteConfigurados(ExceedsConfiguredLimitException ex, WebRequest request) {
+	public final ResponseEntity<Object> handleExceedsConfiguredLimitExceptions(ExceedsConfiguredLimitException ex, WebRequest request) {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add(CONTENT_TYPE, request.getHeader(HttpHeaders.CONTENT_TYPE));
 		final DefaultErrorDto defaultError = new DefaultErrorDto();    
@@ -37,6 +38,17 @@ public class RestExceptionHandler {
 		responseHeaders.add(X_MESSAGE_API_HEADER_NAME, defaultError.getErrorMessage());
 		return new ResponseEntity<>(defaultError, responseHeaders, HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler({UndefinedConcentrationException.class})
+	public final ResponseEntity<Object> handleUndefinedConcentrationExceptions(UndefinedConcentrationException ex, WebRequest request) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add(CONTENT_TYPE, request.getHeader(HttpHeaders.CONTENT_TYPE));
+		final DefaultErrorDto defaultError = new DefaultErrorDto();    
+		defaultError.setErrorMessage(ex.getMessage());
+		responseHeaders.add(X_MESSAGE_API_HEADER_NAME, defaultError.getErrorMessage());
+		return new ResponseEntity<>(defaultError, responseHeaders, HttpStatus.NOT_FOUND);
+	}
+	
 	
 
 }
